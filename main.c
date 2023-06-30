@@ -17,8 +17,6 @@ void printbox(int h,int w,int color){
 
     for(int a=0;a<5;a++)
         mvwprintw(stdscr,h+a,w,"        ");
-
-
 }
 
 void print0(int h,int w,int color){
@@ -261,29 +259,6 @@ void print_game(int bars[8][4],int sel[3],int mode){
             break;
 
         }
-    }
-}
-
-void print_mode_selection_screen(int mode){
-    int h,w;
-    getmaxyx(stdscr, h, w);
-
-    char *mode_choice[2]={"Press A for 7-Colors","Press B for 9-Colors"};
-    mvwprintw(stdscr,(h/2)  ,(w/2)-15,"Press A - 7-Colors Game Mode");
-    mvwprintw(stdscr,(h/2)+1  ,(w/2)-15,"Press B - 9-Colors Game Mode");
-    mvwprintw(stdscr,(h/2)+2  ,(w/2)-15,"Press N - New Game");
-    mvwprintw(stdscr,(h/2)+3  ,(w/2)-15,"Press R - Restart Current Game");
-    if (!mode){
-        attron(COLOR_PAIR(selected));
-        mvwprintw(stdscr,(h/2)  ,(w/2)-4,mode_choice[0]);
-        attron(COLOR_PAIR(not_selected));
-        mvwprintw(stdscr,(h/2)+1  ,(w/2)-4,mode_choice[1]);
-
-    }else{
-        attron(COLOR_PAIR(not_selected));
-        mvwprintw(stdscr,(h/2)  ,(w/2)-4,mode_choice[0]);
-        attron(COLOR_PAIR(selected));
-        mvwprintw(stdscr,(h/2)+1  ,(w/2)-4,mode_choice[1]);
     }
 }
 
