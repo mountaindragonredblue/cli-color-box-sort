@@ -13,4 +13,4 @@ compile with "gcc -lcurses main.c -o cli-color-box-sort"
 
 maybe define your own colors, just change the number in
 init_pair(7,COLOR_BLACK, 130); //130 darkorange 
-in some index number from the xterm color table
+in some index number of the xterm color table
