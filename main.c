@@ -446,7 +446,7 @@ int main (int argc,char **argv){
                         break;
 
         }
-        if(bars[0][0]) print_game(bars,sel,mode);
+        print_game(bars,sel,mode);
     }
 
 }
