@@ -6,8 +6,8 @@
 //9 colors //11 bars 2 empty
 //12 colors //14 bars 2 empty
 //n_colors+2empty
-#define not_selected       10
-#define selected           11
+#define not_selected       13
+#define selected           14
 
 void printbox(int h,int w,int color){
 
@@ -118,6 +118,34 @@ void print11(int h,int w,int color){
     mvwprintw(stdscr,h+4,w,"  ++  ");
 }
 
+void print12(int h,int w,int color){
+    attron(COLOR_PAIR(color));
+    mvwprintw(stdscr,h  ,w,"    //");
+    mvwprintw(stdscr,h+1,w,"   // ");
+    mvwprintw(stdscr,h+2,w,"  //  ");
+    mvwprintw(stdscr,h+3,w," //   ");
+    mvwprintw(stdscr,h+4,w,"//    ");
+}
+
+void print13(int h,int w,int color){
+    attron(COLOR_PAIR(color));
+    mvwprintw(stdscr,h  ,w,"*    *");
+    mvwprintw(stdscr,h+1,w," *  * ");
+    mvwprintw(stdscr,h+2,w,"******");
+    mvwprintw(stdscr,h+3,w," *  * ");
+    mvwprintw(stdscr,h+4,w,"*    *");
+}
+
+void print14(int h,int w,int color){
+    attron(COLOR_PAIR(color));
+    mvwprintw(stdscr,h  ,w,"      ");
+    mvwprintw(stdscr,h+1,w,"      ");
+    mvwprintw(stdscr,h+2,w,"------");
+    mvwprintw(stdscr,h+3,w,"      ");
+    mvwprintw(stdscr,h+4,w,"      ");
+}
+
+
 /* Arrange the N elements of ARRAY in random order.
  * Only effective if N is much smaller than RAND_MAX;
  * if this may not be the case, use a better random
@@ -136,7 +164,7 @@ void shuffle(int *array, size_t n){
     }
 }
 
-void print_game(int bars[8][4],int sel[3],int mode){
+void print_game(int bars[8][4],int sel[3],int mode,time_t start){
 
     clear();
 
@@ -185,7 +213,7 @@ void print_game(int bars[8][4],int sel[3],int mode){
     printbox(13,81,bars[8][1]);
     printbox(19,81,bars[8][0]);
 
-    if(mode){
+    if(mode>7){
     printbox(1,91,bars[9][3]);
     printbox(7,91,bars[9][2]);
     printbox(13,91,bars[9][1]);
@@ -197,19 +225,42 @@ void print_game(int bars[8][4],int sel[3],int mode){
     printbox(19,101,bars[10][0]);
     }
 
-    print1(26,1 ,not_selected);
-    print2(26,11,not_selected);
-    print3(26,21,not_selected);
-    print4(26,31,not_selected);
-    print5(26,41,not_selected);
-    print6(26,51,not_selected);
-    print7(26,61,not_selected);
-    print8(26,71,not_selected);
-    print9(26,81,not_selected);
+    if(mode>9){
+    printbox(1,111,bars[11][3]);
+    printbox(7,111,bars[11][2]);
+    printbox(13,111,bars[11][1]);
+    printbox(19,111,bars[11][0]);
 
-    if(mode){
-    print0(26,91,not_selected);
-    print11(26,101,not_selected);
+    printbox(1,121,bars[12][3]);
+    printbox(7,121,bars[12][2]);
+    printbox(13,121,bars[12][1]);
+    printbox(19,121,bars[12][0]);
+
+    printbox(1,131,bars[13][3]);
+    printbox(7,131,bars[13][2]);
+    printbox(13,131,bars[13][1]);
+    printbox(19,131,bars[13][0]);
+    }
+
+
+    print1(26,2 ,not_selected);
+    print2(26,12,not_selected);
+    print3(26,22,not_selected);
+    print4(26,32,not_selected);
+    print5(26,42,not_selected);
+    print6(26,52,not_selected);
+    print7(26,62,not_selected);
+    print8(26,72,not_selected);
+    print9(26,82,not_selected);
+
+    if(mode>7){
+    print0(26,92,not_selected);
+    print11(26,102,not_selected);
+    }
+    if(mode>9){
+    print12(26,112,not_selected);
+    print13(26,122,not_selected);
+    print14(26,132,not_selected);
     }
 
     if(sel[0]){
@@ -222,44 +273,55 @@ void print_game(int bars[8][4],int sel[3],int mode){
             mvwaddch(stdscr,19-(6*sel[2])+a,1+(10*sel[1])+8,' ');
         }
         switch(sel[1]){
-            case 0: print1(26,1 ,selected);
+            case 0: print1(26,2 ,selected);
             break;
 
-            case 1: print2(26,11,selected);
+            case 1: print2(26,12,selected);
             break;
 
-            case 2: print3(26,21,selected);
+            case 2: print3(26,22,selected);
             break;
 
-            case 3: print4(26,31,selected);
+            case 3: print4(26,32,selected);
             break;
 
-            case 4: print5(26,41,selected);
+            case 4: print5(26,42,selected);
             break;
 
-            case 5: print6(26,51,selected);
+            case 5: print6(26,52,selected);
             break;
 
-            case 6: print7(26,61,selected);
+            case 6: print7(26,62,selected);
             break;
 
-            case 7: print8(26,71,selected);
+            case 7: print8(26,72,selected);
             break;
 
-            case 8: print9(26,81,selected);
+            case 8: print9(26,82,selected);
             break;
 
 
-            case 9: if(!mode) break;
-                print0(26,91,selected);
+            case 9: if(mode>7)print0(26,92,selected);
             break;
 
-            case 10: if(!mode) break;
-                print11(26,101,selected);
+            case 10: if(mode>7)print11(26,102,selected);
+            break;
+
+            case 11: if(mode>9)print12(26,112,selected);
+            break;
+
+            case 12: if(mode>9)print13(26,122,selected);
+            break;
+
+            case 13: if(mode>9)print14(26,132,selected);
             break;
 
         }
     }
+
+    double elapsed = difftime(time(NULL),start);
+    attron(COLOR_PAIR(not_selected));
+    mvwprintw(stdscr,25,132,"T=%02d:%02d", (int)elapsed/60,(int)elapsed%60);
 }
 
 void handle_bars(int bars[9][4], int sel[3], int bar_n){
@@ -293,75 +355,40 @@ void handle_bars(int bars[9][4], int sel[3], int bar_n){
                 }
             }
         }
+
+
 }
 
-void init_bars(int bars[11][4],int box_arr[36],int mode){
-    bars[0][0]=box_arr[0];
-        bars[0][1]=box_arr[1];
-        bars[0][2]=box_arr[2];
-        bars[0][3]=box_arr[3];
-        bars[1][0]=box_arr[4];
-        bars[1][1]=box_arr[5];
-        bars[1][2]=box_arr[6];
-        bars[1][3]=box_arr[7];
-        bars[2][0]=box_arr[8];
-        bars[2][1]=box_arr[9];
-        bars[2][2]=box_arr[10];
-        bars[2][3]=box_arr[11];
-        bars[3][0]=box_arr[12];
-        bars[3][1]=box_arr[13];
-        bars[3][2]=box_arr[14];
-        bars[3][3]=box_arr[15];
-        bars[4][0]=box_arr[16];
-        bars[4][1]=box_arr[17];
-        bars[4][2]=box_arr[18];
-        bars[4][3]=box_arr[19];
-        bars[5][0]=box_arr[20];
-        bars[5][1]=box_arr[21];
-        bars[5][2]=box_arr[22];
-        bars[5][3]=box_arr[23];
-        bars[6][0]=box_arr[24];
-        bars[6][1]=box_arr[25];
-        bars[6][2]=box_arr[26];
-        bars[6][3]=box_arr[27];
+void init_bars(int bars[14][4],int box_arr[36],int mode){
 
-        if(mode){
-        bars[7][0]=box_arr[28];
-        bars[7][1]=box_arr[29];
-        bars[7][2]=box_arr[30];
-        bars[7][3]=box_arr[31];
-        bars[8][0]=box_arr[32];
-        bars[8][1]=box_arr[33];
-        bars[8][2]=box_arr[34];
-        bars[8][3]=box_arr[35];
-        }else{
-        bars[7][0]=0;
-        bars[7][1]=0;
-        bars[7][2]=0;
-        bars[7][3]=0;
-        bars[8][0]=0;
-        bars[8][1]=0;
-        bars[8][2]=0;
-        bars[8][3]=0;
+        for(int a=0,c=0;a<mode;a++){
+            for(int b=0;b<4;b++){
+
+                bars[a][b]=box_arr[c];
+                c++;
+            }
         }
-        bars[9][0]=0;
-        bars[9][1]=0;
-        bars[9][2]=0;
-        bars[9][3]=0;
-        bars[10][0]=0;
-        bars[10][1]=0;
-        bars[10][2]=0;
-        bars[10][3]=0;
+
+        for(int a=mode;a<mode+2;a++){
+            for(int b=0;b<4;b++){
+
+                bars[a][b]=0;
+
+            }
+        }
 }
-void new_game(int bars[11][4],int box_arr[36],int mode){
-    for(int a=0,b=0;a<36;a++){
+
+time_t new_game(int bars[11][4],int box_arr[36],int mode){
+    for(int a=0,b=0;a<48;a++){
             if(!(a%4))b++;
             box_arr[a]=b;
         }
 
-        if(!mode)shuffle(box_arr,28);else shuffle(box_arr,36);
+        shuffle(box_arr,mode*4);
 
         init_bars(bars,box_arr,mode);
+
+        return time(NULL);
 }
 
 int main (int argc,char **argv){
@@ -373,15 +400,19 @@ int main (int argc,char **argv){
     init_pair(2,COLOR_BLACK, COLOR_GREEN);
     init_pair(3,COLOR_BLACK, 226);  //yellow
     init_pair(4,COLOR_BLACK, COLOR_BLUE);
-    init_pair(5,COLOR_BLACK, COLOR_MAGENTA);
+    init_pair(5,COLOR_BLACK, 90);
     init_pair(6,COLOR_BLACK, COLOR_CYAN);
-    init_pair(7,COLOR_BLACK, 130); //darkorange
+    init_pair(7,COLOR_BLACK, 202); //darkorange
 
     init_pair(8,COLOR_BLACK, 234); //grey
     init_pair(9,COLOR_BLACK, 32); //skyblue
 
-    init_pair(10,COLOR_WHITE, COLOR_BLACK);
-    init_pair(11,COLOR_BLACK, COLOR_WHITE);
+    init_pair(10,COLOR_BLACK, 231);
+    init_pair(11,COLOR_BLACK, 22);
+    init_pair(12,COLOR_BLACK, 213);
+
+    init_pair(not_selected,COLOR_WHITE, COLOR_BLACK);
+    init_pair(selected,COLOR_BLACK, COLOR_WHITE);
 
     curs_set(0); // sets the cursor to invisible
 
@@ -389,9 +420,11 @@ int main (int argc,char **argv){
     rand(); rand(); rand(); //init
 
     int sel[3]={0}; //selection data [0]-> 0/1 box selected true false [1] bar1-8 [2] box column
-    int bars[11][4]={0};
-    int box_arr[36]={0};
+    int bars[14][4]={0};
+    int box_arr[48]={0};
     int mode=0;
+    time_t start;
+
 
     //int h,w; getmaxyx(stdscr, h, w);
 
@@ -399,11 +432,12 @@ int main (int argc,char **argv){
     mvwprintw(stdscr,1,0,"----------------------");
     mvwprintw(stdscr,2    ,0,"Keybindings");
     mvwprintw(stdscr,3    ,0,"-----------");
-    mvwprintw(stdscr,4    ,0,"1234567890+ -> select box");
-    mvwprintw(stdscr,5    ,0,"A -> 7-Colors Game Mode");
-    mvwprintw(stdscr,6  ,0,"B -> 9-Colors Game Mode");
-    mvwprintw(stdscr,7  ,0,"R -> Retry Current Game");
-    mvwprintw(stdscr,8  ,0,"Q -> Quit Game");
+    mvwprintw(stdscr,4    ,0,"1234567890+/*- -> select box");
+    mvwprintw(stdscr,5    ,0,"A -> 7-Colors  Game Mode");
+    mvwprintw(stdscr,6  ,0,"B -> 9-Colors  Game Mode");
+    mvwprintw(stdscr,7  ,0,"C -> 12-Colors Game Mode");
+    mvwprintw(stdscr,8  ,0,"R -> Retry Current Game");
+    mvwprintw(stdscr,9  ,0,"Q -> Quit Game");
 
     while(1){
 
@@ -426,15 +460,25 @@ int main (int argc,char **argv){
                         break;
             case '9':   handle_bars(bars,sel,8);
                         break;
-            case '0':   if(mode)handle_bars(bars,sel,9);
+            case '0':   if(mode>7)handle_bars(bars,sel,9);
                         break;
-            case '+':   if(mode)handle_bars(bars,sel,10);
+            case '+':   if(mode>7)handle_bars(bars,sel,10);
                         break;
-            case 'a':   mode=0;
-                        new_game(bars,box_arr,mode);
+            case '/':   if(mode>9)handle_bars(bars,sel,11);
                         break;
-            case 'b':   mode=1;
-                        new_game(bars,box_arr,mode);
+            case '*':   if(mode>9)handle_bars(bars,sel,12);
+                        break;
+            case '-':   if(mode>9)handle_bars(bars,sel,13);
+                        break;
+
+            case 'a':   mode=7;
+                        start=new_game(bars,box_arr,mode);
+                        break;
+            case 'b':   mode=9;
+                        start=new_game(bars,box_arr,mode);
+                        break;
+            case 'c':   mode=12;
+                        start=new_game(bars,box_arr,mode);
                         break;
             case 'r':   init_bars(bars,box_arr,mode);
                         break;
@@ -446,7 +490,7 @@ int main (int argc,char **argv){
                         break;
 
         }
-        print_game(bars,sel,mode);
+          print_game(bars,sel,mode,start);
     }
 
 }
